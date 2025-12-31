@@ -26,3 +26,7 @@ logs/
 
 # Coverage
 coverage/
+
+# NPM auth (never commit)
+.npmrc
+.npmrc.*

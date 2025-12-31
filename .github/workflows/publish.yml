@@ -1,0 +1,51 @@
+name: Publish to npm
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-npm-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Publish if version is new
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          PKG_NAME="$(node -p "require('./package.json').name")"
+          LOCAL_VERSION="$(node -p "require('./package.json').version")"
+          REMOTE_VERSION="$(npm view "$PKG_NAME" version 2>/dev/null || true)"
+
+          echo "package=$PKG_NAME"
+          echo "local_version=$LOCAL_VERSION"
+          echo "remote_version=${REMOTE_VERSION:-<none>}"
+
+          if [ "${REMOTE_VERSION:-}" = "$LOCAL_VERSION" ]; then
+            echo "Version already published; skipping."
+            exit 0
+          fi
+
+          npm publish --access public
