@@ -37,7 +37,7 @@
     "type": "git",
     "url": "git+https://github.com/fakhrirafiki/theme-engine.git"
   },
-  "homepage": "https://github.com/fakhrirafiki/theme-engine",
+  "homepage": "https://theme-engine-example.vercel.app/",
   "bugs": {
     "url": "https://github.com/fakhrirafiki/theme-engine/issues"
   },

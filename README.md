@@ -8,6 +8,8 @@ Theme system for **Next.js (App Router)**: mode (`light | dark | system`) + them
 ![npm downloads](https://img.shields.io/npm/dm/@fakhrirafiki/theme-engine)
 ![license](https://img.shields.io/npm/l/@fakhrirafiki/theme-engine)
 
+Live demo: https://theme-engine-example.vercel.app/
+
 ## ✨ Why use this?
 
 - ⚡ **Fast setup**: 1 CSS import + 1 provider
