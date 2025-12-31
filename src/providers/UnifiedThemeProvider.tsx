@@ -190,16 +190,26 @@ export function ThemeProvider<const TCustomPresets extends CustomPresetsRecord |
 
   // Mode state management
   const [mode, setMode] = useState<Mode>(() => {
-    const stored = getStoredMode(modeStorageKey);
-    return stored || defaultMode;
+    // IMPORTANT:
+    // Do not read localStorage in the initial render path.
+    // Next.js will SSR Client Components, and reading client-only values here
+    // can cause hydration mismatches (e.g. server renders light, client hydrates dark).
+    return defaultMode;
   });
 
   const [resolvedMode, setResolvedMode] = useState<"light" | "dark">(() => {
-    if (mode === "system") {
-      return getSystemTheme();
-    }
-    return mode as "light" | "dark";
+    // Keep this deterministic between SSR + first client render.
+    // If defaultMode === "system", we default to "light" until the effect runs.
+    if (defaultMode === "dark") return "dark";
+    return "light";
   });
+
+  // Load persisted mode after hydration (SSR-safe)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = getStoredMode(modeStorageKey);
+    if (stored) setMode(stored);
+  }, [modeStorageKey]);
 
   // Preset collection management - merge built-in and custom presets
   const availablePresets = useMemo(() => {
@@ -581,7 +591,14 @@ export function ThemeProvider<const TCustomPresets extends CustomPresetsRecord |
   }, [presetStorageKey, defaultPreset, getAvailablePresetById, applyPresetColors, resolvedMode]);
 
   // Always inject ThemeScript for pre-hydration preset restoration
-  const scriptElement = <ThemeScript presetStorageKey={presetStorageKey} defaultPreset={defaultPreset} />;
+  const scriptElement = (
+    <ThemeScript
+      presetStorageKey={presetStorageKey}
+      modeStorageKey={modeStorageKey}
+      defaultMode={defaultMode}
+      defaultPreset={defaultPreset}
+    />
+  );
 
   const isUsingDefaultPreset = !!defaultPreset && currentPreset?.presetId === defaultPreset;
 

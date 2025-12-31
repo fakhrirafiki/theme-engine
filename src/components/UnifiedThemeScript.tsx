@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { getPresetById } from "../data/tweakcn-presets";
+import type { Mode } from "../types";
 
 interface ThemeScriptProps {
   /**
@@ -10,16 +11,32 @@ interface ThemeScriptProps {
    */
   presetStorageKey?: string;
   /**
+   * Storage key for appearance mode persistence
+   * @default 'theme-engine-theme'
+   */
+  modeStorageKey?: string;
+  /**
+   * Default appearance mode when no stored preference exists
+   * @default 'system'
+   */
+  defaultMode?: Mode;
+  /**
    * Default preset ID to apply when no stored preset exists
    */
   defaultPreset?: string;
 }
 
 /**
- * Simplified theme script that only handles preset restoration
- * Works in harmony with ThemeProvider for dark/light mode
+ * Pre-hydration theme script.
+ * - Restores appearance mode (light/dark/system) to avoid hydration mismatch + FOUC.
+ * - Restores preset CSS variables early so Tailwind/shadcn tokens render correctly on first paint.
  */
-export function ThemeScript({ presetStorageKey = "theme-preset", defaultPreset }: ThemeScriptProps) {
+export function ThemeScript({
+  presetStorageKey = "theme-preset",
+  modeStorageKey = "theme-engine-theme",
+  defaultMode = "system",
+  defaultPreset,
+}: ThemeScriptProps) {
   // Get default preset data if specified
   const defaultPresetData = useMemo(() => {
     if (!defaultPreset) return null;
@@ -35,15 +52,50 @@ export function ThemeScript({ presetStorageKey = "theme-preset", defaultPreset }
 
   const scriptContent = useMemo(
     () => `
-    // Unified Theme Engine: Restore preset colors before hydration
+    // Unified Theme Engine: Restore mode + preset colors before hydration
     (function() {
       try {
         const presetStorageKey = "${presetStorageKey}";
+        const modeStorageKey = "${modeStorageKey}";
+        const defaultMode = "${defaultMode}";
         const isDev = (function() {
           try {
             return location.hostname === 'localhost' || location.hostname === '127.0.0.1';
           } catch {
             return false;
+          }
+        })();
+
+        // ---- Mode restoration (pre-hydration) ----
+        (function() {
+          try {
+            const root = document.documentElement;
+            let storedMode = null;
+            try {
+              storedMode = localStorage.getItem(modeStorageKey);
+            } catch {}
+
+            const isValidMode = storedMode === 'light' || storedMode === 'dark' || storedMode === 'system';
+            const mode = isValidMode ? storedMode : defaultMode;
+
+            let systemMode = 'light';
+            try {
+              systemMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            } catch {}
+
+            const resolvedMode = mode === 'system' ? systemMode : mode;
+
+            root.classList.remove('light', 'dark');
+            root.classList.add(resolvedMode);
+            root.style.colorScheme = resolvedMode;
+
+            // Expose for runtime consumers (optional)
+            try {
+              root.dataset.themeEngineMode = mode;
+              root.dataset.themeEngineResolvedMode = resolvedMode;
+            } catch {}
+          } catch (error) {
+            if (isDev) console.warn('🎨 UnifiedThemeScript: Mode restoration failed:', error);
           }
         })();
         
@@ -252,7 +304,7 @@ export function ThemeScript({ presetStorageKey = "theme-preset", defaultPreset }
           
         }
         
-        // Load and apply persisted preset or default preset
+        // ---- Preset restoration (pre-hydration) ----
         const storedPreset = localStorage.getItem(presetStorageKey);
         let presetToApply = null;
         
@@ -270,10 +322,9 @@ export function ThemeScript({ presetStorageKey = "theme-preset", defaultPreset }
         }
         
         if (presetToApply) {
-          // Determine current mode (will be set by ThemeProvider)
-          // Default to light if no theme class is present yet
-          const isDark = document.documentElement.classList.contains('dark');
-          const mode = isDark ? 'dark' : 'light';
+          const root = document.documentElement;
+          const resolved = (root.dataset && root.dataset.themeEngineResolvedMode) || (root.classList.contains('dark') ? 'dark' : 'light');
+          const mode = resolved === 'dark' ? 'dark' : 'light';
           const colors = presetToApply.colors && presetToApply.colors[mode];
           
           if (colors) {
