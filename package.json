@@ -1,0 +1,78 @@
+{
+  "name": "@fakhrirafiki/theme-engine",
+  "version": "0.4.9",
+  "description": "Elegant theming system with smooth transitions, custom presets, semantic accent colors, and complete shadcn/ui support for modern React applications",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/base.css": "./dist/styles/base.css",
+    "./styles/animations.css": "./dist/styles/animations.css",
+    "./styles/components.css": "./dist/styles/components.css",
+    "./styles/utilities.css": "./dist/styles/utilities.css",
+    "./styles/tailwind.css": "./dist/styles/tailwind.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "gen:preset-ids": "node scripts/generate-built-in-preset-ids.mjs",
+    "build": "node scripts/generate-built-in-preset-ids.mjs && tsup --config tsup.config.ts && npm run build:css",
+    "build:css": "cp -r src/styles dist/",
+    "build:full": "npm run build",
+    "type-check": "node scripts/generate-built-in-preset-ids.mjs && tsc --noEmit",
+    "prepublishOnly": "npm run build:full",
+    "publish-patch": "npm version patch --no-workspaces-update && npm publish",
+    "publish-minor": "npm version minor --no-workspaces-update && npm publish",
+    "publish-major": "npm version major --no-workspaces-update && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fakhrirafiki/ngobrollink-monorepo.git",
+    "directory": "packages/theme-engine"
+  },
+  "homepage": "https://github.com/fakhrirafiki/ngobrollink-monorepo/tree/main/packages/theme-engine",
+  "bugs": {
+    "url": "https://github.com/fakhrirafiki/ngobrollink-monorepo/issues"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "theme",
+    "dark-mode",
+    "light-mode",
+    "react",
+    "typescript",
+    "transitions",
+    "shadcn",
+    "tailwind",
+    "preset",
+    "css-variables",
+    "color-scheme",
+    "theming",
+    "ui",
+    "components",
+    "accent-colors",
+    "semantic-colors"
+  ],
+  "author": "Tiket Ngobrol Team",
+  "license": "MIT"
+}

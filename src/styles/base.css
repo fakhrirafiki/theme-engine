@@ -1,0 +1,151 @@
+/* Theme Engine - Base CSS Variables & Defaults */
+
+:root {
+  /* Typography - safe defaults that work across all systems */
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
+
+  /* Layout - consistent default border radius */
+  --radius: 0.5rem;
+
+  /* Shadows - minimal, elegant defaults */
+  --shadow-color: 0 0% 0%;
+  --shadow-opacity: 0.1;
+  --shadow-blur: 8px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 2px;
+
+  /* Spacing - consistent spacing system */
+  --letter-spacing: -0.025em;
+  --spacing: 0.25rem;
+
+  /* Default shadcn/ui color system - neutral, professional defaults */
+  /* These will be overridden by preset themes */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 45.1%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 45.1%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 0 0% 3.9%;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+
+  /* Sidebar colors (for dashboard layouts) */
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  /* Typography - same as light mode for consistency */
+  --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", Consolas, Monaco, monospace;
+
+  /* Layout - consistent with light mode */
+  --radius: 0.5rem;
+
+  /* Shadows - adjusted opacity for dark backgrounds */
+  --shadow-color: 0 0% 0%;
+  --shadow-opacity: 0.3;
+  --shadow-blur: 12px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 4px;
+
+  /* Spacing - same as light mode */
+  --letter-spacing: -0.025em;
+  --spacing: 0.25rem;
+
+  /* Dark mode color system - professional dark theme defaults */
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 63.9%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 63.9%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+
+  /* Sidebar colors - adapted for dark mode */
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+/* Base typography and layout styles */
+body {
+  font-family: var(--font-sans);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  letter-spacing: var(--letter-spacing);
+}
+
+/* Spacing system: Apply --spacing to common layout elements */
+/* This creates consistent vertical rhythm throughout the application */
+@layer base {
+  p:not(:last-child) {
+    margin-bottom: var(--spacing);
+  }
+  
+  ul:not(:last-child), ol:not(:last-child) {
+    margin-bottom: var(--spacing);
+  }
+  
+  li:not(:last-child) {
+    margin-bottom: calc(var(--spacing) * 0.5);
+  }
+  
+  section:not(:last-child) {
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+  
+  /* Utility class for consistent spacing */
+  .space-y-spacing > * + * {
+    margin-top: var(--spacing);
+  }
+}

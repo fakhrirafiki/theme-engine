@@ -1,0 +1,211 @@
+/* Theme Engine - Component Styles */
+
+/* Theme toggle button - elegant and accessible */
+.theme-toggle {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.theme-toggle:hover {
+  scale: 1.05;
+  background-color: hsl(var(--secondary));
+}
+
+.theme-toggle:active {
+  scale: 0.95;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Icon transition for theme toggle */
+.theme-toggle-icon {
+  transition: all 0.3s ease-in-out;
+  color: hsl(var(--foreground));
+}
+
+.theme-toggle[data-theme="light"] .theme-toggle-icon {
+  rotate: 0deg;
+}
+
+.theme-toggle[data-theme="dark"] .theme-toggle-icon {
+  rotate: 180deg;
+}
+
+/* ThemePresetButtons: lightweight CSS-based animations and hover affordances */
+
+/* ThemePresetButtons: base button styling (no Tailwind required) */
+.theme-preset-button {
+  width: 100%;
+  height: 56px;
+  padding: 0.75rem 0.875rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.625rem;
+
+  border-radius: calc(var(--radius) + 0.25rem);
+  border: 1px solid hsl(var(--border) / 0.75);
+  background: hsl(var(--card) / 0.85);
+  color: hsl(var(--foreground));
+
+  box-shadow: 0 1px 0 hsl(var(--border) / 0.35);
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease-out,
+    background-color 0.2s ease-out,
+    border-color 0.2s ease-out,
+    box-shadow 0.2s ease-out;
+}
+
+.theme-preset-button:focus-visible {
+  outline: 2px solid hsl(var(--ring) / 0.75);
+  outline-offset: 2px;
+}
+
+.theme-preset-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.theme-preset-button--selected {
+  background: hsl(var(--primary) / 0.06);
+  border-color: hsl(var(--primary) / 0.35);
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.25);
+}
+
+.theme-preset-button__colors {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.theme-preset-button__text {
+  min-width: 0;
+  flex: 1;
+}
+
+.theme-preset-button__label {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  line-height: 1.1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.theme-preset-button:hover {
+  transform: translateY(-2px) scale(1.01);
+  z-index: 20;
+  background: hsl(var(--card) / 0.95);
+  border-color: hsl(var(--primary) / 0.2);
+  box-shadow:
+    0 10px 25px hsl(0 0% 0% / 0.12),
+    0 0 0 1px hsl(var(--border) / 0.35);
+}
+
+/* Color boxes within preset buttons - fallback only */
+.theme-color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: calc(var(--radius) - 4px);
+  border: 1px solid hsl(var(--border) / 0.75);
+  box-shadow: 0 1px 0 hsl(var(--border) / 0.3);
+}
+
+.dark .theme-color-box {
+  border-color: hsl(var(--border) / 0.4);
+}
+
+/* Theme status card - for debugging and demos */
+.theme-status-card {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--card-foreground));
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.theme-status-card h3 {
+  color: hsl(var(--card-foreground));
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.theme-status-card p {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.875rem;
+  margin-bottom: 0;
+}
+
+/* Theme showcase sections */
+.theme-showcase-section {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: var(--spacing);
+}
+
+.theme-showcase-section h3 {
+  color: hsl(var(--card-foreground));
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.theme-showcase-section p {
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 1rem;
+}
+
+/* Color palette displays */
+.color-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.color-palette-item {
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid hsl(var(--border));
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .theme-preset-button {
+    min-width: 120px;
+  }
+  
+  .color-palette-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .theme-toggle,
+  .theme-preset-button {
+    border-width: 2px;
+  }
+  
+  .theme-color-box {
+    border-width: 2px;
+  }
+}

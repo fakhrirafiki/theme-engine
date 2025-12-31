@@ -1,0 +1,43 @@
+/* 
+ * Theme Engine - Complete CSS System
+ * Elegant theming with smooth transitions for modern React applications
+ */
+
+/* Core Foundation - CSS variables and base styles */
+@import "./base.css";
+
+/* Beautiful Animations - View transitions and component effects */
+@import "./animations.css";
+
+/* Component Styles - Theme toggle and preset components */
+@import "./components.css";
+
+/* Dynamic Utilities - Responsive spacing, radius, and shadows */
+@import "./utilities.css";
+
+/* Tailwind Integration - Seamless Tailwind CSS compatibility */
+@import "./tailwind.css";
+
+/*
+ * Usage:
+ * 
+ * 1. Full system (recommended):
+ *    @import "theme-engine/styles";
+ * 
+ * 2. Selective imports (advanced):
+ *    @import "theme-engine/styles/base.css";
+ *    @import "theme-engine/styles/components.css";
+ * 
+ * 3. With Tailwind CSS:
+ *    @import "tailwindcss";
+ *    @import "theme-engine/styles";
+ * 
+ * Features included:
+ * ✅ Complete CSS variable system (36+ properties)
+ * ✅ Light/dark mode defaults with elegant transitions
+ * ✅ Dynamic spacing, shadows, and border radius
+ * ✅ Beautiful theme preset animations
+ * ✅ Accessibility-first design (reduced motion, high contrast)
+ * ✅ Tailwind CSS integration with @theme inline
+ * ✅ Responsive utilities and typography
+ */

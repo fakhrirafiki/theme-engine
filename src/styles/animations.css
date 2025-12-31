@@ -1,0 +1,125 @@
+/* Theme Engine - Beautiful Theme Transition Animations */
+
+/* View Transition Wave Effect */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  /* Ensure the outgoing view (old theme) is beneath */
+  z-index: 0;
+}
+
+::view-transition-new(root) {
+  /* Ensure the incoming view (new theme) is always on top */
+  z-index: 1;
+}
+
+/* Ripple reveal animation for smooth theme transitions */
+@keyframes reveal {
+  from {
+    /* Use CSS variables for the origin, with explicit fallback */
+    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+    opacity: 0.7;
+  }
+  to {
+    /* Use CSS variables for the origin, with explicit fallback */
+    clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
+    opacity: 1;
+  }
+}
+
+::view-transition-new(root) {
+  /* Apply the reveal animation */
+  animation: reveal 0.4s ease-in-out forwards;
+}
+
+/* Fallback for reduced motion preference - accessibility first */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* Preset button animations - smooth infinite scroll */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes scroll-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+/* ThemePresetButtons: JS-computed infinite scroll distance */
+@keyframes theme-engine-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--theme-engine-scroll-distance, 0px)));
+  }
+}
+
+.theme-preset-row--animated .theme-preset-track {
+  animation-name: theme-engine-scroll;
+  animation-duration: var(--theme-engine-scroll-duration, 10s);
+  animation-timing-function: var(--theme-engine-scroll-easing, linear);
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.theme-preset-row--hover-pause:hover .theme-preset-track {
+  animation-play-state: paused;
+}
+
+/* Hover effects for interactive elements */
+.theme-hover-lift {
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth transitions for theme changes */
+.theme-transition {
+  transition: background-color 0.3s ease-in-out, 
+              color 0.3s ease-in-out, 
+              border-color 0.3s ease-in-out;
+}
+
+/* Loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.theme-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth fade in for theme-dependent elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}

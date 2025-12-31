@@ -1,0 +1,226 @@
+/* Theme Engine - Dynamic Utilities */
+
+@layer utilities {
+  /* Dynamic Border Radius Utilities - Override Tailwind defaults with CSS custom properties */
+  /* These utilities use the --radius variable to create consistent, themeable border radius values */
+  
+  .rounded-none {
+    border-radius: 0px;
+  }
+  
+  .rounded-sm {
+    border-radius: calc(var(--radius) - 4px);
+  }
+  
+  .rounded {
+    border-radius: calc(var(--radius) - 2px); /* Dynamic base rounded */
+  }
+  
+  .rounded-md {
+    border-radius: calc(var(--radius) - 1px);
+  }
+  
+  .rounded-lg {
+    border-radius: var(--radius); /* Main radius value */
+  }
+  
+  .rounded-xl {
+    border-radius: calc(var(--radius) + 4px);
+  }
+  
+  .rounded-2xl {
+    border-radius: calc(var(--radius) + 8px);
+  }
+  
+  .rounded-3xl {
+    border-radius: calc(var(--radius) + 12px);
+  }
+  
+  .rounded-full {
+    border-radius: 9999px; /* Keep full rounded as circular */
+  }
+
+  /* Individual corners - for completeness */
+  .rounded-t {
+    border-top-left-radius: calc(var(--radius) - 2px);
+    border-top-right-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-r {
+    border-top-right-radius: calc(var(--radius) - 2px);
+    border-bottom-right-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-b {
+    border-bottom-right-radius: calc(var(--radius) - 2px);
+    border-bottom-left-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-l {
+    border-top-left-radius: calc(var(--radius) - 2px);
+    border-bottom-left-radius: calc(var(--radius) - 2px);
+  }
+
+  /* Corner-specific utilities for fine-grained control */
+  .rounded-tl {
+    border-top-left-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-tr {
+    border-top-right-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-br {
+    border-bottom-right-radius: calc(var(--radius) - 2px);
+  }
+  
+  .rounded-bl {
+    border-bottom-left-radius: calc(var(--radius) - 2px);
+  }
+
+  /* Dynamic spacing utilities based on --spacing variable */
+  .space-dynamic > * + * {
+    margin-top: var(--spacing);
+  }
+  
+  .space-dynamic-x > * + * {
+    margin-left: var(--spacing);
+  }
+  
+  .gap-dynamic {
+    gap: var(--spacing);
+  }
+  
+  .p-dynamic {
+    padding: var(--spacing);
+  }
+  
+  .px-dynamic {
+    padding-left: var(--spacing);
+    padding-right: var(--spacing);
+  }
+  
+  .py-dynamic {
+    padding-top: var(--spacing);
+    padding-bottom: var(--spacing);
+  }
+  
+  .pt-dynamic {
+    padding-top: var(--spacing);
+  }
+  
+  .pr-dynamic {
+    padding-right: var(--spacing);
+  }
+  
+  .pb-dynamic {
+    padding-bottom: var(--spacing);
+  }
+  
+  .pl-dynamic {
+    padding-left: var(--spacing);
+  }
+  
+  .m-dynamic {
+    margin: var(--spacing);
+  }
+  
+  .mx-dynamic {
+    margin-left: var(--spacing);
+    margin-right: var(--spacing);
+  }
+  
+  .my-dynamic {
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing);
+  }
+  
+  .mt-dynamic {
+    margin-top: var(--spacing);
+  }
+  
+  .mr-dynamic {
+    margin-right: var(--spacing);
+  }
+  
+  .mb-dynamic {
+    margin-bottom: var(--spacing);
+  }
+  
+  .ml-dynamic {
+    margin-left: var(--spacing);
+  }
+
+  /* Shadow utilities using dynamic shadow variables */
+  .shadow-dynamic {
+    box-shadow: var(--shadow-offset-x, 0px) 
+                var(--shadow-offset-y, 2px) 
+                var(--shadow-blur, 8px) 
+                var(--shadow-spread, 0px) 
+                hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1));
+  }
+  
+  .shadow-dynamic-lg {
+    box-shadow: var(--shadow-offset-x, 0px) 
+                calc(var(--shadow-offset-y, 2px) * 2) 
+                calc(var(--shadow-blur, 8px) * 1.5) 
+                var(--shadow-spread, 0px) 
+                hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1));
+  }
+  
+  .drop-shadow-dynamic {
+    filter: drop-shadow(var(--shadow-offset-x, 0px) 
+                        var(--shadow-offset-y, 2px) 
+                        var(--shadow-blur, 8px) 
+                        hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1)));
+  }
+
+  /* Typography utilities using dynamic variables */
+  .tracking-dynamic {
+    letter-spacing: var(--letter-spacing);
+  }
+  
+  .font-dynamic-sans {
+    font-family: var(--font-sans);
+  }
+  
+  .font-dynamic-serif {
+    font-family: var(--font-serif);
+  }
+  
+  .font-dynamic-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Theme-aware utilities */
+  .bg-theme-card {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+  }
+  
+  .bg-theme-popover {
+    background-color: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+  }
+  
+  .border-theme {
+    border-color: hsl(var(--border));
+  }
+  
+  .ring-theme {
+    ring-color: hsl(var(--ring));
+  }
+  
+  /* Responsive typography scaling with spacing */
+  @media (min-width: 768px) {
+    .responsive-spacing {
+      --spacing: 0.375rem; /* Slightly larger on medium screens */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-spacing {
+      --spacing: 0.5rem; /* Even larger on large screens */
+    }
+  }
+}

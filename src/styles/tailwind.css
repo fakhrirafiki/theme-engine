@@ -1,0 +1,121 @@
+/* Theme Engine - Tailwind Integration */
+
+/* 
+ * This file provides seamless integration with Tailwind CSS
+ * by mapping CSS variables to Tailwind's color system and utilities
+ */
+
+@theme inline {
+  /* Color mappings - Bridge between CSS variables and Tailwind classes */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Chart colors for data visualization */
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  /* Sidebar colors for dashboard layouts */
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  /* Semantic accent colors for status and feedback */
+  --color-accent-info: hsl(var(--accent-info));
+  --color-accent-info-foreground: hsl(var(--accent-info-foreground));
+  --color-accent-success: hsl(var(--accent-success));
+  --color-accent-success-foreground: hsl(var(--accent-success-foreground));
+  --color-accent-warning: hsl(var(--accent-warning));
+  --color-accent-warning-foreground: hsl(var(--accent-warning-foreground));
+  --color-accent-danger: hsl(var(--accent-danger));
+  --color-accent-danger-foreground: hsl(var(--accent-danger-foreground));
+  --color-accent-brand: hsl(var(--accent-brand));
+  --color-accent-brand-foreground: hsl(var(--accent-brand-foreground));
+  --color-accent-feature: hsl(var(--accent-feature));
+  --color-accent-feature-foreground: hsl(var(--accent-feature-foreground));
+  --color-accent-highlight: hsl(var(--accent-highlight));
+  --color-accent-highlight-foreground: hsl(var(--accent-highlight-foreground));
+
+  /* Dynamic border radius system */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Typography tracking system */
+  --tracking-tighter: calc(var(--letter-spacing) - 0.025em);
+  --tracking-tight: var(--letter-spacing);
+  --tracking-normal: var(--letter-spacing);
+  --tracking-wide: calc(var(--letter-spacing) + 0.025em);
+  --tracking-wider: calc(var(--letter-spacing) + 0.05em);
+  --tracking-widest: calc(var(--letter-spacing) + 0.1em);
+
+  /* Font family mappings */
+  --font-family-sans: var(--font-sans);
+  --font-family-serif: var(--font-serif);
+  --font-family-mono: var(--font-mono);
+
+  /* Spacing system */
+  --size-spacing: var(--spacing);
+
+  /* Shadow system integration */
+  --color-shadow: hsl(var(--shadow-color));
+  --shadow-opacity: var(--shadow-opacity);
+  --shadow-blur: var(--shadow-blur);
+  --shadow-spread: var(--shadow-spread);
+  --shadow-offset-x: var(--shadow-offset-x);
+  --shadow-offset-y: var(--shadow-offset-y);
+
+  /* Dynamic shadow utilities */
+  --shadow-xs: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 0.5) calc(var(--shadow-blur, 8px) * 0.5) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / calc(var(--shadow-opacity, 0.1) * 0.5));
+  --shadow-sm: var(--shadow-offset-x, 0px) var(--shadow-offset-y, 2px) var(--shadow-blur, 8px) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1));
+  --shadow: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 1.25) calc(var(--shadow-blur, 8px) * 1.25) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1));
+  --shadow-md: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 1.5) calc(var(--shadow-blur, 8px) * 1.5) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / var(--shadow-opacity, 0.1));
+  --shadow-lg: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 2) calc(var(--shadow-blur, 8px) * 2) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / calc(var(--shadow-opacity, 0.1) * 1.25));
+  --shadow-xl: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 2.5) calc(var(--shadow-blur, 8px) * 2.5) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / calc(var(--shadow-opacity, 0.1) * 1.5));
+  --shadow-2xl: var(--shadow-offset-x, 0px) calc(var(--shadow-offset-y, 2px) * 3) calc(var(--shadow-blur, 8px) * 3) var(--shadow-spread, 0px) hsl(var(--shadow-color, 0 0% 0%) / calc(var(--shadow-opacity, 0.1) * 1.75));
+}
+
+/* Ensure base styles work well with Tailwind */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground tracking-normal;
+    font-family: var(--font-sans);
+  }
+
+  /* Ensure proper font rendering */
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variation-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
