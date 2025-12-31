@@ -503,6 +503,14 @@ Note: the thrown error string might mention `useTheme` because `useThemeEngine()
 
 Ensure your `globals.css` imports `@fakhrirafiki/theme-engine/styles` (and Tailwind v4 is configured if you rely on Tailwind utilities).
 
+### Turbopack: “module factory is not available” (HMR) after upgrading
+
+This is a Next.js Turbopack dev/HMR issue that can happen after updating dependencies in `node_modules` (or when using a locally linked package that rebuilds `dist/` while `next dev` is running).
+
+- Restart `next dev` (often enough).
+- If it persists: delete `.next/` and restart.
+- Workaround: run dev server with webpack: `next dev --webpack`
+
 ---
 
 ## License
