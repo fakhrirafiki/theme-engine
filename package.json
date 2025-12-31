@@ -29,18 +29,17 @@
     "build:full": "npm run build",
     "type-check": "node scripts/generate-built-in-preset-ids.mjs && tsc --noEmit",
     "prepublishOnly": "npm run build:full",
-    "publish-patch": "npm version patch --no-workspaces-update && npm publish",
-    "publish-minor": "npm version minor --no-workspaces-update && npm publish",
-    "publish-major": "npm version major --no-workspaces-update && npm publish"
+    "publish-patch": "npm version patch && npm publish",
+    "publish-minor": "npm version minor && npm publish",
+    "publish-major": "npm version major && npm publish"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fakhrirafiki/ngobrollink-monorepo.git",
-    "directory": "packages/theme-engine"
+    "url": "git+https://github.com/fakhrirafiki/theme-engine.git"
   },
-  "homepage": "https://github.com/fakhrirafiki/ngobrollink-monorepo/tree/main/packages/theme-engine",
+  "homepage": "https://github.com/fakhrirafiki/theme-engine",
   "bugs": {
-    "url": "https://github.com/fakhrirafiki/ngobrollink-monorepo/issues"
+    "url": "https://github.com/fakhrirafiki/theme-engine/issues"
   },
   "dependencies": {
     "clsx": "^2.1.1"
@@ -74,5 +73,6 @@
     "semantic-colors"
   ],
   "author": "Tiket Ngobrol Team",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }
