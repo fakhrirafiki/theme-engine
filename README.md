@@ -9,6 +9,7 @@ Theme system for **Next.js (App Router)**: mode (`light | dark | system`) + them
 ![license](https://img.shields.io/npm/l/@fakhrirafiki/theme-engine)
 
 Live demo: https://theme-engine-example.vercel.app/
+Example repo: https://github.com/fakhrirafiki/theme-engine-example
 
 ## ✨ Why use this?
 
@@ -409,7 +410,7 @@ export function ThemePresetSelect({
 
               {isActive && (
                 <span className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-foreground">
-                  Aktif
+                  Active
                 </span>
               )}
             </span>
@@ -417,7 +418,7 @@ export function ThemePresetSelect({
         );
       })}
 
-      {presets.length === 0 && <p className="text-xs text-muted-foreground">Belum ada tema yang tersedia.</p>}
+      {presets.length === 0 && <p className="text-xs text-muted-foreground">No themes available yet.</p>}
     </div>
   );
 }

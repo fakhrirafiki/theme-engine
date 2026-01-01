@@ -31,11 +31,11 @@
 }
 
 .theme-toggle[data-theme="light"] .theme-toggle-icon {
-  rotate: 0deg;
+  rotate: 180deg;
 }
 
 .theme-toggle[data-theme="dark"] .theme-toggle-icon {
-  rotate: 180deg;
+  rotate: 0deg;
 }
 
 /* ThemePresetButtons: lightweight CSS-based animations and hover affordances */
@@ -59,10 +59,7 @@
   box-shadow: 0 1px 0 hsl(var(--border) / 0.35);
   cursor: pointer;
 
-  transition:
-    transform 0.2s ease-out,
-    background-color 0.2s ease-out,
-    border-color 0.2s ease-out,
+  transition: transform 0.2s ease-out, background-color 0.2s ease-out, border-color 0.2s ease-out,
     box-shadow 0.2s ease-out;
 }
 
@@ -111,9 +108,7 @@
   z-index: 20;
   background: hsl(var(--card) / 0.95);
   border-color: hsl(var(--primary) / 0.2);
-  box-shadow:
-    0 10px 25px hsl(0 0% 0% / 0.12),
-    0 0 0 1px hsl(var(--border) / 0.35);
+  box-shadow: 0 10px 25px hsl(0 0% 0% / 0.12), 0 0 0 1px hsl(var(--border) / 0.35);
 }
 
 /* Color boxes within preset buttons - fallback only */
@@ -192,7 +187,7 @@
   .theme-preset-button {
     min-width: 120px;
   }
-  
+
   .color-palette-grid {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
@@ -204,7 +199,7 @@
   .theme-preset-button {
     border-width: 2px;
   }
-  
+
   .theme-color-box {
     border-width: 2px;
   }
