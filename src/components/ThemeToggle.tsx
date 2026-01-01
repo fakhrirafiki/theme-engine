@@ -77,29 +77,9 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
       toggleMode({ x, y });
     };
 
-    const sizeClasses = {
-      sm: "h-8 w-8 p-1.5",
-      md: "h-9 w-9 p-2",
-      lg: "h-10 w-10 p-2.5",
-    };
-
-    const variantClasses = {
-      default: "bg-background border border-input hover:bg-accent hover:text-accent-foreground",
-      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-      ghost: "hover:bg-accent hover:text-accent-foreground",
-    };
-
     const baseClasses = clsx(
       // Base button styles
       "theme-toggle",
-      "inline-flex items-center justify-center",
-      "rounded-md text-sm font-medium",
-      "ring-offset-background transition-colors",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-      "disabled:pointer-events-none disabled:opacity-50",
-      // Size and variant
-      sizeClasses[size],
-      variantClasses[variant],
       className
     );
 
@@ -124,6 +104,8 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
         ref={ref}
         className={baseClasses}
         onClick={handleClick}
+        data-size={size}
+        data-variant={variant}
         data-mode={resolvedMode}
         data-theme={resolvedMode}
         aria-label={`Switch to ${resolvedMode === "light" ? "dark" : "light"} mode`}
