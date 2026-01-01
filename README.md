@@ -1,6 +1,6 @@
-# 🎨 Theme Engine
+# 🎨 useThemeEngine for **Next.js (App Router)**
 
-Theme system for **Next.js (App Router)**: mode (`light | dark | system`) + theme presets (semantic tokens via CSS variables).
+Dark mode + theme presets (semantic tokens via CSS variables).
 
 > ✅ Opinionated defaults, minimal setup, and TypeScript autocomplete that “just works”.
 
@@ -8,15 +8,15 @@ Theme system for **Next.js (App Router)**: mode (`light | dark | system`) + them
 ![npm downloads](https://img.shields.io/npm/dm/@fakhrirafiki/theme-engine)
 ![license](https://img.shields.io/npm/l/@fakhrirafiki/theme-engine)
 
-Live demo: https://theme-engine-example.vercel.app/
-Example repo: https://github.com/fakhrirafiki/theme-engine-example
+- Live demo: https://theme-engine-example.vercel.app/
+- Example repo: https://github.com/fakhrirafiki/theme-engine-example
 
 ## ✨ Why use this?
 
+- 🧠 **DX-first**: `useThemeEngine()` for everything
 - ⚡ **Fast setup**: 1 CSS import + 1 provider
 - 🌓 **Mode support**: `light | dark | system` (with View Transition ripple when supported)
 - 🎨 **Theme presets**: built-in presets + your own presets
-- 🧠 **DX-first**: `useThemeEngine()` for everything
 - 🧩 **Tailwind v4 friendly**: `@theme inline` tokens included (works with shadcn-style semantic tokens)
 
 ## 📚 Table of contents
@@ -50,14 +50,14 @@ pnpm add @fakhrirafiki/theme-engine
 In `src/app/globals.css`:
 
 ```css
-@import '@fakhrirafiki/theme-engine/styles';
+@import "@fakhrirafiki/theme-engine/styles";
 ```
 
 ✅ Tailwind v4 (recommended order):
 
 ```css
-@import 'tailwindcss';
-@import '@fakhrirafiki/theme-engine/styles';
+@import "tailwindcss";
+@import "@fakhrirafiki/theme-engine/styles";
 
 @custom-variant dark (&:is(.dark *));
 ```
@@ -65,10 +65,10 @@ In `src/app/globals.css`:
 ℹ️ Not using Tailwind v4?
 
 ```css
-@import '@fakhrirafiki/theme-engine/styles/base.css';
-@import '@fakhrirafiki/theme-engine/styles/animations.css';
-@import '@fakhrirafiki/theme-engine/styles/components.css';
-@import '@fakhrirafiki/theme-engine/styles/utilities.css';
+@import "@fakhrirafiki/theme-engine/styles/base.css";
+@import "@fakhrirafiki/theme-engine/styles/animations.css";
+@import "@fakhrirafiki/theme-engine/styles/components.css";
+@import "@fakhrirafiki/theme-engine/styles/utilities.css";
 ```
 
 ### 2) Wrap your app with `ThemeProvider`
@@ -76,9 +76,9 @@ In `src/app/globals.css`:
 In `src/app/layout.tsx`:
 
 ```tsx
-import type { ReactNode } from 'react';
-import { ThemeProvider } from '@fakhrirafiki/theme-engine';
-import './globals.css';
+import type { ReactNode } from "react";
+import { ThemeProvider } from "@fakhrirafiki/theme-engine";
+import "./globals.css";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -100,18 +100,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 Toggle mode:
 
 ```tsx
-'use client';
+"use client";
 
-import { useThemeEngine } from '@fakhrirafiki/theme-engine';
+import { useThemeEngine } from "@fakhrirafiki/theme-engine";
 
 export function ModeButtons() {
   const { mode, setDarkMode, toggleDarkMode } = useThemeEngine();
 
   return (
     <div>
-      <button onClick={() => setDarkMode('system')}>System</button>
-      <button onClick={() => setDarkMode('light')}>Light</button>
-      <button onClick={() => setDarkMode('dark')}>Dark</button>
+      <button onClick={() => setDarkMode("system")}>System</button>
+      <button onClick={() => setDarkMode("light")}>Light</button>
+      <button onClick={() => setDarkMode("dark")}>Dark</button>
       <button onClick={() => toggleDarkMode()}>Toggle</button>
       <div>Current: {mode}</div>
     </div>
@@ -122,18 +122,18 @@ export function ModeButtons() {
 Pick a theme preset by ID:
 
 ```tsx
-'use client';
+"use client";
 
-import { useThemeEngine } from '@fakhrirafiki/theme-engine';
+import { useThemeEngine } from "@fakhrirafiki/theme-engine";
 
 export function PresetButtons() {
   const { applyThemeById, clearTheme, currentTheme } = useThemeEngine();
 
   return (
     <div>
-      <button onClick={() => applyThemeById('modern-minimal')}>Modern Minimal</button>
+      <button onClick={() => applyThemeById("modern-minimal")}>Modern Minimal</button>
       <button onClick={() => clearTheme()}>Reset</button>
-      <div>Active: {currentTheme?.presetName ?? 'Default'}</div>
+      <div>Active: {currentTheme?.presetName ?? "Default"}</div>
     </div>
   );
 }
@@ -142,18 +142,18 @@ export function PresetButtons() {
 💡 Want typed autocomplete (built-in IDs + your custom IDs)? Use a generic:
 
 ```tsx
-'use client';
+"use client";
 
-import { ThemePresets, useThemeEngine } from '@fakhrirafiki/theme-engine';
-import { customPresets } from './custom-theme-presets';
+import { ThemePresets, useThemeEngine } from "@fakhrirafiki/theme-engine";
+import { customPresets } from "./custom-theme-presets";
 
 export function TypedPresetButtons() {
   const { applyThemeById } = useThemeEngine<ThemePresets<typeof customPresets>>();
 
   return (
     <div>
-      <button onClick={() => applyThemeById('my-brand')}>My Brand</button>
-      <button onClick={() => applyThemeById('modern-minimal')}>Modern Minimal</button>
+      <button onClick={() => applyThemeById("my-brand")}>My Brand</button>
+      <button onClick={() => applyThemeById("modern-minimal")}>Modern Minimal</button>
     </div>
   );
 }
@@ -191,13 +191,7 @@ If you run multiple apps on the same domain, override the keys:
 
 ---
 
-## 🧩 Custom presets (recommended)
-
-Create presets in TweakCN-compatible format and pass them into `ThemeProvider`.
-
-✅ Tip: use `satisfies` to preserve literal keys for TS autocomplete:
-
-### 🎛️ Get a brand theme from TweakCN (recommended)
+## 🧩 Get your brand theme from TweakCN (recommended)
 
 The fastest way to create a great-looking preset is to use the TweakCN editor:
 
@@ -206,31 +200,31 @@ The fastest way to create a great-looking preset is to use the TweakCN editor:
 Pick a theme, tweak the colors, then copy the preset output and paste it into your `customPresets` object (it matches the `TweakCNThemePreset` shape).
 
 ```ts
-import { type TweakCNThemePreset } from '@fakhrirafiki/theme-engine';
+import { type TweakCNThemePreset } from "@fakhrirafiki/theme-engine";
 
 export const customPresets = {
-  'my-brand': {
-    label: 'My Brand',
+  "my-brand": {
+    label: "My Brand",
     styles: {
       light: {
-        background: '#ffffff',
-        foreground: '#111827',
-        primary: '#2563eb',
-        'primary-foreground': '#ffffff',
-        secondary: '#e5e7eb',
-        'secondary-foreground': '#111827',
-        card: '#ffffff',
-        'card-foreground': '#111827',
+        background: "#ffffff",
+        foreground: "#111827",
+        primary: "#2563eb",
+        "primary-foreground": "#ffffff",
+        secondary: "#e5e7eb",
+        "secondary-foreground": "#111827",
+        card: "#ffffff",
+        "card-foreground": "#111827",
       },
       dark: {
-        background: '#0b1020',
-        foreground: '#f9fafb',
-        primary: '#60a5fa',
-        'primary-foreground': '#0b1020',
-        secondary: '#1f2937',
-        'secondary-foreground': '#f9fafb',
-        card: '#111827',
-        'card-foreground': '#f9fafb',
+        background: "#0b1020",
+        foreground: "#f9fafb",
+        primary: "#60a5fa",
+        "primary-foreground": "#0b1020",
+        secondary: "#1f2937",
+        "secondary-foreground": "#f9fafb",
+        card: "#111827",
+        "card-foreground": "#f9fafb",
       },
     },
   },
@@ -240,9 +234,9 @@ export const customPresets = {
 Then in your providers/layout:
 
 ```tsx
-import type { ReactNode } from 'react';
-import { ThemeProvider } from '@fakhrirafiki/theme-engine';
-import { customPresets } from './custom-theme-presets';
+import type { ReactNode } from "react";
+import { ThemeProvider } from "@fakhrirafiki/theme-engine";
+import { customPresets } from "./custom-theme-presets";
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -266,10 +260,10 @@ Notes:
 The package ships with a built-in preset collection:
 
 ```ts
-import { getPresetIds, getPresetById } from '@fakhrirafiki/theme-engine';
+import { getPresetIds, getPresetById } from "@fakhrirafiki/theme-engine";
 
 const ids = getPresetIds();
-const modernMinimal = getPresetById('modern-minimal');
+const modernMinimal = getPresetById("modern-minimal");
 ```
 
 ---
@@ -278,24 +272,24 @@ const modernMinimal = getPresetById('modern-minimal');
 
 After importing `@fakhrirafiki/theme-engine/styles`, you can use semantic tokens like:
 
-| Category | Tailwind class examples | Backed by preset CSS variables | Notes |
-| --- | --- | --- | --- |
-| Surfaces | `bg-background`, `text-foreground` | `--background`, `--foreground` | Base app background + text |
-| Cards | `bg-card`, `text-card-foreground` | `--card`, `--card-foreground` | Cards / panels |
-| Popovers | `bg-popover`, `text-popover-foreground` | `--popover`, `--popover-foreground` | Popovers / dropdowns |
-| Brand / actions | `bg-primary`, `text-primary-foreground` | `--primary`, `--primary-foreground` | Primary buttons / highlights |
-| Secondary | `bg-secondary`, `text-secondary-foreground` | `--secondary`, `--secondary-foreground` | Secondary UI surfaces |
-| Muted | `bg-muted`, `text-muted-foreground` | `--muted`, `--muted-foreground` | Subtle backgrounds / helper text |
-| Accent | `bg-accent`, `text-accent-foreground` | `--accent`, `--accent-foreground` | Emphasis (not status colors) |
-| Destructive | `bg-destructive`, `text-destructive-foreground` | `--destructive`, `--destructive-foreground` | Danger actions |
-| Borders / focus | `border-border`, `border-input`, `ring-ring` | `--border`, `--input`, `--ring` | Used by `outline-ring/50` too |
-| Charts | `bg-chart-1`, `text-chart-2` | `--chart-1` ... `--chart-5` | Data viz palettes |
-| Sidebar | `bg-sidebar`, `text-sidebar-foreground`, `bg-sidebar-primary`, `border-sidebar-border` | `--sidebar-*` | Handy for dashboard layouts |
-| Status accents | `bg-accent-success`, `text-accent-danger-foreground` | `--accent-<name>`, `--accent-<name>-foreground` | Optional: only if preset defines `accent-*` |
-| Radius scale | `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xl` | `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl` | Derived from `--radius` |
-| Tracking scale | `tracking-tighter`, `tracking-wide` | `--tracking-*` | Derived from `--letter-spacing` |
-| Fonts | `font-sans`, `font-serif`, `font-mono` | `--font-sans`, `--font-serif`, `--font-mono` | Defaults in `base.css` |
-| Shadows | `shadow-sm`, `shadow-md`, `shadow-xl` | `--shadow-*` | Derived from `--shadow-*` knobs |
+| Category        | Tailwind class examples                                                                | Backed by preset CSS variables                             | Notes                                       |
+| --------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------- |
+| Surfaces        | `bg-background`, `text-foreground`                                                     | `--background`, `--foreground`                             | Base app background + text                  |
+| Cards           | `bg-card`, `text-card-foreground`                                                      | `--card`, `--card-foreground`                              | Cards / panels                              |
+| Popovers        | `bg-popover`, `text-popover-foreground`                                                | `--popover`, `--popover-foreground`                        | Popovers / dropdowns                        |
+| Brand / actions | `bg-primary`, `text-primary-foreground`                                                | `--primary`, `--primary-foreground`                        | Primary buttons / highlights                |
+| Secondary       | `bg-secondary`, `text-secondary-foreground`                                            | `--secondary`, `--secondary-foreground`                    | Secondary UI surfaces                       |
+| Muted           | `bg-muted`, `text-muted-foreground`                                                    | `--muted`, `--muted-foreground`                            | Subtle backgrounds / helper text            |
+| Accent          | `bg-accent`, `text-accent-foreground`                                                  | `--accent`, `--accent-foreground`                          | Emphasis (not status colors)                |
+| Destructive     | `bg-destructive`, `text-destructive-foreground`                                        | `--destructive`, `--destructive-foreground`                | Danger actions                              |
+| Borders / focus | `border-border`, `border-input`, `ring-ring`                                           | `--border`, `--input`, `--ring`                            | Used by `outline-ring/50` too               |
+| Charts          | `bg-chart-1`, `text-chart-2`                                                           | `--chart-1` ... `--chart-5`                                | Data viz palettes                           |
+| Sidebar         | `bg-sidebar`, `text-sidebar-foreground`, `bg-sidebar-primary`, `border-sidebar-border` | `--sidebar-*`                                              | Handy for dashboard layouts                 |
+| Status accents  | `bg-accent-success`, `text-accent-danger-foreground`                                   | `--accent-<name>`, `--accent-<name>-foreground`            | Optional: only if preset defines `accent-*` |
+| Radius scale    | `rounded-sm`, `rounded-md`, `rounded-lg`, `rounded-xl`                                 | `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-xl` | Derived from `--radius`                     |
+| Tracking scale  | `tracking-tighter`, `tracking-wide`                                                    | `--tracking-*`                                             | Derived from `--letter-spacing`             |
+| Fonts           | `font-sans`, `font-serif`, `font-mono`                                                 | `--font-sans`, `--font-serif`, `--font-mono`               | Defaults in `base.css`                      |
+| Shadows         | `shadow-sm`, `shadow-md`, `shadow-xl`                                                  | `--shadow-*`                                               | Derived from `--shadow-*` knobs             |
 
 ---
 
@@ -306,9 +300,9 @@ After importing `@fakhrirafiki/theme-engine/styles`, you can use semantic tokens
 Ready-made mode toggle button (with View Transition ripple when supported).
 
 ```tsx
-'use client';
+"use client";
 
-import { ThemeToggle } from '@fakhrirafiki/theme-engine';
+import { ThemeToggle } from "@fakhrirafiki/theme-engine";
 
 export function HeaderThemeToggle() {
   return <ThemeToggle size="md" variant="ghost" />;
@@ -320,9 +314,9 @@ export function HeaderThemeToggle() {
 Animated preset picker (shows custom presets first, then built-ins):
 
 ```tsx
-'use client';
+"use client";
 
-import { ThemePresetButtons } from '@fakhrirafiki/theme-engine';
+import { ThemePresetButtons } from "@fakhrirafiki/theme-engine";
 
 export function PresetPicker() {
   return <ThemePresetButtons />;
@@ -336,21 +330,16 @@ Want a simple, scrollable preset list (e.g. for a settings modal)? Copy-paste th
 > Note: this snippet uses Tailwind utility classes. If you don’t use Tailwind, replace the classes with your own styles/UI components.
 
 ```tsx
-'use client';
+"use client";
 
-import { formatColor, useThemeEngine } from '@fakhrirafiki/theme-engine';
+import { formatColor, useThemeEngine } from "@fakhrirafiki/theme-engine";
 
 type ThemePresetSelectProps = {
   allowedPresetIds?: string[];
 };
 
 export function ThemePresetSelect({
-  allowedPresetIds = [
-    'modern-minimal',
-    'violet-bloom',
-    'vercel',
-    'mono',
-  ],
+  allowedPresetIds = ["modern-minimal", "violet-bloom", "vercel", "mono"],
 }: ThemePresetSelectProps) {
   const { currentTheme, applyThemeById, availablePresets, resolvedMode } = useThemeEngine();
 
@@ -366,7 +355,7 @@ export function ThemePresetSelect({
     const preset = availablePresets[presetId];
     if (!preset) return [];
 
-    const scheme = resolvedMode === 'dark' ? preset.styles.dark : preset.styles.light;
+    const scheme = resolvedMode === "dark" ? preset.styles.dark : preset.styles.light;
     const primary = (scheme as any).primary as string | undefined;
     const secondary = (scheme as any).secondary as string | undefined;
     const accent = (scheme as any).accent as string | undefined;
@@ -386,8 +375,8 @@ export function ThemePresetSelect({
             type="button"
             className={`w-full rounded-full border px-3 py-2 text-xs transition-colors ${
               isActive
-                ? 'border-primary/70 bg-primary/10 text-foreground'
-                : 'border-border bg-muted/40 text-muted-foreground hover:border-muted-foreground/40 hover:bg-muted/60'
+                ? "border-primary/70 bg-primary/10 text-foreground"
+                : "border-border bg-muted/40 text-muted-foreground hover:border-muted-foreground/40 hover:bg-muted/60"
             }`}
             onClick={() => applyThemeById(preset.id)}
           >
@@ -399,7 +388,7 @@ export function ThemePresetSelect({
                       <span
                         key={index}
                         className="inline-block h-2.5 w-2.5 rounded-full border border-foreground/10 shadow-sm"
-                        style={{ backgroundColor: formatColor(color, 'hex') }}
+                        style={{ backgroundColor: formatColor(color, "hex") }}
                       />
                     ))}
                   </span>
@@ -440,15 +429,14 @@ export function ThemePresetSelect({
 />
 ```
 
-| Prop | Type | Default | Description |
-| --- | --- | --- | --- |
-| `children` | `ReactNode` | required | React subtree |
-| `defaultMode` | `Mode` | `'system'` | Used when no persisted value |
-| `defaultPreset` | `BuiltInPresetId \| keyof customPresets` | `undefined` | Default preset (see SSR note) |
-| `modeStorageKey` | `string` | `'theme-engine-theme'` | `localStorage` key for mode |
-| `presetStorageKey` | `string` | `'theme-preset'` | `localStorage` key for preset |
-| `customPresets` | `Record<string, TweakCNThemePreset>` | `undefined` | Add your own presets (can override built-ins by ID) |
-| `Pre-hydration script` | n/a | always on | `ThemeProvider` always injects a pre-hydration script for preset restoration |
+| Prop               | Type                                     | Default                | Description                                         |
+| ------------------ | ---------------------------------------- | ---------------------- | --------------------------------------------------- |
+| `children`         | `ReactNode`                              | required               | React subtree                                       |
+| `defaultMode`      | `Mode`                                   | `'system'`             | Used when no persisted value for dark mode          |
+| `defaultPreset`    | `BuiltInPresetId \| keyof customPresets` | `undefined`            | Default preset (see SSR note)                       |
+| `modeStorageKey`   | `string`                                 | `'theme-engine-theme'` | `localStorage` key for mode                         |
+| `presetStorageKey` | `string`                                 | `'theme-preset'`       | `localStorage` key for preset                       |
+| `customPresets`    | `Record<string, TweakCNThemePreset>`     | `undefined`            | Add your own presets (can override built-ins by ID) |
 
 ### `useThemeEngine()`
 
@@ -461,32 +449,32 @@ useThemeEngine<TCustomPresets = undefined>()
 To get typed custom preset IDs:
 
 ```ts
-useThemeEngine<ThemePresets<typeof customPresets>>()
+useThemeEngine<ThemePresets<typeof customPresets>>();
 ```
 
 Return fields:
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `darkMode` | `boolean` | `resolvedMode === 'dark'` |
-| `mode` | `'light' \| 'dark' \| 'system'` | Current user preference |
-| `resolvedMode` | `'light' \| 'dark'` | Resolved mode (never `system`) |
-| `setDarkMode` | `(mode: Mode) => void` | Set `light \| dark \| system` |
-| `toggleDarkMode` | `(coords?: { x: number; y: number }) => void` | Toggles light/dark (and exits `system`) |
-| `applyThemeById` | `(id: ThemeId) => void` | Apply a preset by ID (alias: `applyPresetById`) |
-| `clearTheme` | `() => void` | Clear preset and fall back to `defaultPreset` if provided (alias: `clearPreset`) |
-| `currentTheme` | `{ presetId; presetName; colors; appliedAt } \| null` | Current preset (alias: `currentPreset`) |
-| `isUsingDefaultPreset` | `boolean` | Whether current preset equals `defaultPreset` |
-| `availablePresets` | `Record<string, TweakCNThemePreset>` | Built-in + custom |
-| `builtInPresets` | `Record<string, TweakCNThemePreset>` | Built-in only |
-| `customPresets` | `Record<string, TweakCNThemePreset>` | Custom only |
+| Field                  | Type                                                  | Description                                                                      |
+| ---------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `darkMode`             | `boolean`                                             | `resolvedMode === 'dark'`                                                        |
+| `mode`                 | `'light' \| 'dark' \| 'system'`                       | Current user preference                                                          |
+| `resolvedMode`         | `'light' \| 'dark'`                                   | Resolved mode (never `system`)                                                   |
+| `setDarkMode`          | `(mode: Mode) => void`                                | Set `light \| dark \| system`                                                    |
+| `toggleDarkMode`       | `(coords?: { x: number; y: number }) => void`         | Toggles light/dark (and exits `system`)                                          |
+| `applyThemeById`       | `(id: ThemeId) => void`                               | Apply a preset by ID (alias: `applyPresetById`)                                  |
+| `clearTheme`           | `() => void`                                          | Clear preset and fall back to `defaultPreset` if provided (alias: `clearPreset`) |
+| `currentTheme`         | `{ presetId; presetName; colors; appliedAt } \| null` | Current preset (alias: `currentPreset`)                                          |
+| `isUsingDefaultPreset` | `boolean`                                             | Whether current preset equals `defaultPreset`                                    |
+| `availablePresets`     | `Record<string, TweakCNThemePreset>`                  | Built-in + custom                                                                |
+| `builtInPresets`       | `Record<string, TweakCNThemePreset>`                  | Built-in only                                                                    |
+| `customPresets`        | `Record<string, TweakCNThemePreset>`                  | Custom only                                                                      |
 
 ### Utilities
 
-| Export | Description |
-| --- | --- |
-| `formatColor(color, format)` | Converts a color string into `hsl`/`rgb`/`hex` |
-| `withAlpha(hslTriplet, alpha)` | Adds alpha to an HSL triplet |
+| Export                         | Description                                    |
+| ------------------------------ | ---------------------------------------------- |
+| `formatColor(color, format)`   | Converts a color string into `hsl`/`rgb`/`hex` |
+| `withAlpha(hslTriplet, alpha)` | Adds alpha to an HSL triplet                   |
 
 ---
 
