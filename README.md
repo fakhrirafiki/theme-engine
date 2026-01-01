@@ -19,6 +19,9 @@ Dark mode + theme presets (semantic tokens via CSS variables).
 - 🎨 **Theme presets**: built-in presets + your own presets
 - 🧩 **Tailwind v4 friendly**: `@theme inline` tokens included (works with shadcn-style semantic tokens)
 
+> [!TIP]
+> If you’re using **shadcn/ui** with **Next.js App Router**, you should use this package — it provides a complete, production-ready theme layer (mode + presets) that plugs straight into shadcn’s semantic tokens.
+
 ## 📚 Table of contents
 
 - [Install](#-install)
