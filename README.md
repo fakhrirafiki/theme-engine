@@ -342,7 +342,7 @@ type ThemePresetSelectProps = {
 };
 
 export function ThemePresetSelect({
-  allowedPresetIds = ["modern-minimal", "violet-bloom", "vercel", "mono"],
+  allowedPresetIds = ["modern-minimal", "violet-bloom", "supabase", "claude", "mono"],
 }: ThemePresetSelectProps) {
   const { currentTheme, applyThemeById, availablePresets, resolvedMode } = useThemeEngine();
 
