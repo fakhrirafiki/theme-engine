@@ -31,14 +31,6 @@
   color: hsl(var(--foreground));
 }
 
-.theme-toggle[data-theme="light"] .theme-toggle-icon {
-  rotate: 180deg;
-}
-
-.theme-toggle[data-theme="dark"] .theme-toggle-icon {
-  rotate: 0deg;
-}
-
 /* ThemePresetButtons: lightweight CSS-based animations and hover affordances */
 
 /* ThemePresetButtons: base button styling (no Tailwind required) */
