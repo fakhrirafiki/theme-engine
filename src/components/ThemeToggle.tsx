@@ -48,28 +48,10 @@ const MoonIcon = () => (
   </svg>
 );
 
-const SystemIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="theme-toggle-icon"
-  >
-    <rect width="20" height="14" x="2" y="3" rx="2" />
-    <line x1="8" x2="16" y1="21" y2="21" />
-    <line x1="12" x2="12" y1="17" y2="21" />
-  </svg>
-);
-
 export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
   ({ className, size = "md", variant = "default", children, ...props }, ref) => {
     const { mode, resolvedMode, toggleMode } = useTheme();
+    const nextResolvedMode = resolvedMode === "light" ? "dark" : "light";
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       // Get click coordinates for ripple effect (exact same as TweakCN)
@@ -106,17 +88,9 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
     // Render appropriate icon
     const renderIcon = () => {
       if (children) return children;
-      
-      switch (mode) {
-        case "light":
-          return <SunIcon />;
-        case "dark":
-          return <MoonIcon />;
-        case "system":
-          return <SystemIcon />;
-        default:
-          return resolvedMode === "dark" ? <MoonIcon /> : <SunIcon />;
-      }
+
+      // Show the target icon (action): in dark mode show Sun (switch to light), and vice versa.
+      return nextResolvedMode === "dark" ? <MoonIcon /> : <SunIcon />;
     };
 
     return (
@@ -124,10 +98,10 @@ export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
         ref={ref}
         className={baseClasses}
         onClick={handleClick}
-        data-mode={resolvedMode}
+        data-mode={mode}
         data-theme={resolvedMode}
-        aria-label={`Switch to ${resolvedMode === "light" ? "dark" : "light"} mode`}
-        title={`Switch to ${resolvedMode === "light" ? "dark" : "light"} mode`}
+        aria-label={`Switch to ${nextResolvedMode} mode`}
+        title={`Switch to ${nextResolvedMode} mode`}
         {...props}
       >
         {renderIcon()}

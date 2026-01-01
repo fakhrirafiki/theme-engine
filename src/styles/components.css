@@ -26,6 +26,7 @@
 
 /* Icon transition for theme toggle */
 .theme-toggle-icon {
+  display: block;
   transition: all 0.3s ease-in-out;
   color: hsl(var(--foreground));
 }
