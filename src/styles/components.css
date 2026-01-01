@@ -13,7 +13,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: calc(var(--radius) + 0.125rem);
+  border-radius: calc(var(--radius));
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1;
