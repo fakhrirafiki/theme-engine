@@ -217,7 +217,14 @@ export function formatColor(
 }
 
 /**
- * Create color with alpha transparency
+ * Create a color with alpha transparency.
+ *
+ * Notes:
+ * - This helper only supports HSL-like inputs that `parseHSL()` can parse
+ *   (e.g. `"hsl(210 40% 98%)"` or `"210 40% 98%"`).
+ * - For hex/rgb inputs, convert first with `formatColor(color, "hsl")`.
+ *
+ * @public
  */
 export function withAlpha(colorInput: string, alpha: number): string {
   const hsl = parseHSL(colorInput);
@@ -266,5 +273,4 @@ export function createHslaWithAlpha(colorInput: string, alpha: number): string {
   
   return `hsla(${h}, ${s}%, ${l}%, ${clampedAlpha})`;
 }
-
 

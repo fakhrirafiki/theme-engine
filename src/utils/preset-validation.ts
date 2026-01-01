@@ -6,7 +6,12 @@
 import type { TweakCNThemePreset } from '../data/tweakcn-presets';
 
 /**
- * Validation result type
+ * Validation result type.
+ *
+ * - `errors` should be treated as invalid input (preset should be rejected)
+ * - `warnings` indicate potentially incomplete presets but may still be usable
+ *
+ * @public
  */
 export interface ValidationResult {
   isValid: boolean;
@@ -46,7 +51,16 @@ const RECOMMENDED_PROPERTIES = [
 ] as const;
 
 /**
- * Validate a single TweakCN preset
+ * Validate a single preset in the TweakCN-compatible shape.
+ *
+ * Intended usage:
+ * - validating user-provided presets before passing them to `ThemeProvider`
+ * - debugging preset issues in development
+ *
+ * Notes:
+ * - This is a lightweight validator (it does not fully parse/compute CSS colors)
+ *
+ * @public
  */
 export function validateTweakCNPreset(preset: any, presetId?: string): ValidationResult {
   const errors: string[] = [];
@@ -112,7 +126,9 @@ export function validateTweakCNPreset(preset: any, presetId?: string): Validatio
 }
 
 /**
- * Validate a collection of custom presets
+ * Validate a collection of custom presets (record keyed by preset ID).
+ *
+ * @public
  */
 export function validateCustomPresets(customPresets: Record<string, TweakCNThemePreset>): ValidationResult {
   const allErrors: string[] = [];
@@ -194,7 +210,11 @@ function isValidColorValue(value: string): boolean {
 }
 
 /**
- * Helper function to log validation results
+ * Convenience logger for `ValidationResult`.
+ *
+ * This is primarily intended for local development diagnostics.
+ *
+ * @public
  */
 export function logValidationResult(result: ValidationResult, context = 'Custom presets'): void {
   if (result.isValid) {

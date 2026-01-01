@@ -23,6 +23,28 @@ type LooseString = string & {};
  * - Custom IDs are inferred from the keys of the `customPresets` argument
  *
  * The resulting `setThemePresetById()` still accepts any string, but VS Code will suggest known IDs first.
+ *
+ * Notes:
+ * - `customPresets` is only used for TypeScript inference (no runtime effect).
+ * - Prefer `useThemeEngine()` if you want a higher-level DX API with aliases.
+ *
+ * @example
+ * ```tsx
+ * "use client";
+ *
+ * import { useTypedTheme } from "@fakhrirafiki/theme-engine";
+ * import { customPresets } from "./custom-presets";
+ *
+ * export function PresetPicker() {
+ *   const { currentPreset, setThemePresetById } = useTypedTheme(customPresets);
+ *
+ *   return (
+ *     <button onClick={() => setThemePresetById("my-brand")}>
+ *       Active: {currentPreset?.presetName ?? "default"}
+ *     </button>
+ *   );
+ * }
+ * ```
  */
 export function useTypedTheme<const TCustomPresets extends CustomPresetsRecord | undefined = undefined>(
   customPresets?: TCustomPresets

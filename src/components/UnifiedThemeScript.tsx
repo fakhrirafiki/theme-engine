@@ -27,9 +27,22 @@ interface ThemeScriptProps {
 }
 
 /**
- * Pre-hydration theme script.
- * - Restores appearance mode (light/dark/system) to avoid hydration mismatch + FOUC.
- * - Restores preset CSS variables early so Tailwind/shadcn tokens render correctly on first paint.
+ * Pre-hydration theme script injected by `ThemeProvider`.
+ *
+ * This runs before React hydration and is intentionally implemented as an inline script so it can:
+ * - restore the `html` mode class (`light`/`dark`) and `color-scheme` as early as possible
+ * - restore preset CSS variables early to prevent FOUC (unstyled/incorrect tokens on first paint)
+ *
+ * It reads:
+ * - `localStorage[modeStorageKey]` (mode persistence)
+ * - `localStorage[presetStorageKey]` (preset persistence)
+ *
+ * It writes:
+ * - `document.documentElement.classList` (`light`/`dark`)
+ * - `document.documentElement.style.colorScheme`
+ * - `document.documentElement.dataset.themeEngineMode` and `dataset.themeEngineResolvedMode` (best-effort)
+ *
+ * You typically do not render this manually — `ThemeProvider` includes it automatically.
  */
 export function ThemeScript({
   presetStorageKey = "theme-preset",

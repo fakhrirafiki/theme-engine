@@ -67,6 +67,28 @@ const SystemIcon = () => (
   </svg>
 );
 
+/**
+ * Button that toggles the current appearance mode (light ↔ dark) using Theme Engine.
+ *
+ * - Reads `mode` / `resolvedMode` from `ThemeProvider` via `useTheme()`
+ * - On click, calls `toggleMode({ x, y })` to enable the optional view-transition ripple
+ * - Renders an icon that reflects the current mode (`light`/`dark`/`system`) unless you pass `children`
+ *
+ * Data attributes:
+ * - `data-size`: `"sm" | "md" | "lg"` (for styling hooks)
+ * - `data-variant`: `"default" | "outline" | "ghost"`
+ * - `data-mode`: resolved mode (`"light" | "dark"`) for CSS hooks
+ * - `data-theme`: alias of `data-mode`
+ *
+ * @example
+ * ```tsx
+ * import { ThemeToggle } from "@fakhrirafiki/theme-engine";
+ *
+ * export function Header() {
+ *   return <ThemeToggle className="ml-auto" />;
+ * }
+ * ```
+ */
 export const ThemeToggle = forwardRef<HTMLButtonElement, ThemeToggleProps>(
   ({ className, size = "md", variant = "default", children, ...props }, ref) => {
     const { mode, resolvedMode, toggleMode } = useTheme();

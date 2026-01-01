@@ -1,12 +1,28 @@
 import * as React from "react"
 import { clsx } from "clsx"
 
+/**
+ * Props for the internal `Button` component.
+ *
+ * This is a small convenience component used by Theme Engine demos/recipes.
+ * Most apps will use their own design system button instead.
+ */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "ghost" | "secondary" | "unstyled"
   size?: "default" | "sm" | "lg"
 }
 
+/**
+ * Minimal button primitive (shadcn-inspired) used in Theme Engine UI.
+ *
+ * @example
+ * ```tsx
+ * import { Button } from "@fakhrirafiki/theme-engine";
+ *
+ * <Button variant="outline" size="sm">Click</Button>
+ * ```
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     return (

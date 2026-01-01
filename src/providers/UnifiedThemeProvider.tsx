@@ -139,13 +139,33 @@ function normalizeColorValueToHslTriplet(value: string): string {
 interface UnifiedThemeProviderProps<TCustomPresets extends CustomPresetsRecord | undefined = undefined> {
   /** React children to wrap with theming context */
   children: React.ReactNode;
-  /** Default appearance mode when no stored preference exists */
+  /**
+   * Default appearance mode when no stored preference exists.
+   *
+   * Notes for SSR/App Router:
+   * - The initial render must be deterministic between server and client to avoid hydration mismatches.
+   * - Persisted mode is restored after hydration (and also pre-hydration via the injected `ThemeScript`).
+   */
   defaultMode?: Mode;
-  /** Default preset ID to use when no stored preset exists or when resetting */
+  /**
+   * Default preset ID to use when no stored preset exists or when resetting.
+   *
+   * If provided, the preset will be applied when:
+   * - there is no persisted preset in `localStorage`, or
+   * - `clearPreset()` is called.
+   */
   defaultPreset?: PresetId<TCustomPresets>;
-  /** localStorage key for appearance mode persistence */
+  /**
+   * `localStorage` key for appearance mode persistence.
+   *
+   * Stored value is one of: `"light" | "dark" | "system"`.
+   */
   modeStorageKey?: string;
-  /** localStorage key for color preset persistence */
+  /**
+   * `localStorage` key for color preset persistence.
+   *
+   * Stored value is a JSON blob written by this provider and restored on subsequent loads.
+   */
   presetStorageKey?: string;
   /** Custom presets to add to the available collection */
   customPresets?: TCustomPresets;
@@ -164,6 +184,14 @@ interface UnifiedThemeProviderProps<TCustomPresets extends CustomPresetsRecord |
  * - ⚡ **SSR-safe** with pre-hydration script support
  * - 🎨 **CSS `!important`** ensures presets override mode defaults
  * - 👀 **MutationObserver** automatically reapplies presets on mode changes
+ *
+ * ## SSR / hydration behavior
+ * This provider is designed for Next.js App Router where Client Components are still SSR-ed.
+ * To avoid hydration mismatches:
+ * - The initial render does not read `localStorage`.
+ * - A pre-hydration `ThemeScript` is injected to apply the correct `html` mode class (`light`/`dark`)
+ *   and restore preset CSS variables as early as possible.
+ * - Persisted mode and preset are then reconciled after hydration.
  *
  * @example
  * ```tsx
@@ -630,6 +658,8 @@ export function ThemeProvider<const TCustomPresets extends CustomPresetsRecord |
  *
  * Provides access to both appearance mode controls and preset management
  * in a single, coordinated interface.
+ *
+ * Prefer `useThemeEngine()` for a DX-first API with aliases and typed preset IDs.
  *
  * @example
  * ```tsx

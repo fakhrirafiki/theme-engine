@@ -19,13 +19,28 @@ type LooseString = string & {};
 /**
  * Type helper to "register" your presets for autocomplete.
  *
- * Usage:
- * `useThemeEngine<ThemePresets<typeof customPresets>>()`
+ * @example
+ * ```ts
+ * import { type ThemePresets, useThemeEngine } from "@fakhrirafiki/theme-engine";
+ * import { customPresets } from "./custom-presets";
+ *
+ * type PresetRegistry = ThemePresets<typeof customPresets>;
+ *
+ * const theme = useThemeEngine<PresetRegistry>();
+ * // theme.applyThemeById("my-custom-id") // ✅ autocomplete for keys in customPresets + built-ins
+ * ```
  */
 export type ThemePresets<T> = T extends CustomPresetsRecord ? T : never;
 
 export type ThemeEnginePresetId<TCustomPresets extends CustomPresetsRecord | undefined = undefined> = ThemePresetId<TCustomPresets>;
 
+/**
+ * Accepts either:
+ * - a typed preset ID (built-in + inferred custom preset IDs), or
+ * - any string (runtime safety / forwards compatibility)
+ *
+ * This is useful when you receive preset IDs dynamically (e.g. from a URL param).
+ */
 export type ThemeId<TCustomPresets extends CustomPresetsRecord | undefined = undefined> =
   | ThemeEnginePresetId<TCustomPresets>
   | LooseString;
@@ -39,6 +54,45 @@ export type ThemeId<TCustomPresets extends CustomPresetsRecord | undefined = und
  *
  * For typed preset ID autocomplete (built-in + your custom IDs):
  * `useThemeEngine<ThemePresets<typeof customPresets>>()`
+ *
+ * Naming:
+ * - `applyThemeById` and `applyPresetById` are aliases
+ * - `clearTheme` and `clearPreset` are aliases
+ *
+ * @example
+ * ```tsx
+ * "use client";
+ *
+ * import { ThemeProvider, useThemeEngine, type ThemePresets } from "@fakhrirafiki/theme-engine";
+ * import { customPresets } from "./custom-presets";
+ *
+ * type Presets = ThemePresets<typeof customPresets>;
+ *
+ * function Controls() {
+ *   const { mode, resolvedMode, setDarkMode, applyThemeById, clearTheme } = useThemeEngine<Presets>();
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setDarkMode("system")}>System</button>
+ *       <button onClick={() => setDarkMode("light")}>Light</button>
+ *       <button onClick={() => setDarkMode("dark")}>Dark</button>
+ *
+ *       <button onClick={() => applyThemeById("modern-minimal")}>Modern Minimal</button>
+ *       <button onClick={() => clearTheme()}>Reset</button>
+ *
+ *       <div>mode: {mode} · resolved: {resolvedMode}</div>
+ *     </div>
+ *   );
+ * }
+ *
+ * export default function Page() {
+ *   return (
+ *     <ThemeProvider customPresets={customPresets} defaultPreset="modern-minimal">
+ *       <Controls />
+ *     </ThemeProvider>
+ *   );
+ * }
+ * ```
  */
 export function useThemeEngine<const TCustomPresets extends CustomPresetsRecord | undefined = undefined>() {
   const theme = useTheme();

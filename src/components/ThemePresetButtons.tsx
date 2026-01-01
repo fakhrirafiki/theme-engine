@@ -216,6 +216,33 @@ const AnimatedRow = ({
 /**
  * Main ThemePresetButtons component
  */
+/**
+ * Preset picker UI for Theme Engine.
+ *
+ * Renders a horizontally scrolling set of preset buttons (optionally in multiple rows) and applies
+ * the selected preset via `ThemeProvider` context.
+ *
+ * Requirements:
+ * - Must be used under `ThemeProvider` (it reads `availablePresets`/`currentPreset` from context).
+ *
+ * Behavior:
+ * - Built-in + custom presets are merged from context and displayed (custom presets are shown first).
+ * - Selecting a preset calls `applyPreset()` from the provider, which also persists it to `localStorage`.
+ * - Supports infinite marquee animation; disable via `animation={{ enabled: false }}`.
+ *
+ * Customization:
+ * - Use `renderPreset` to fully control the button UI (selection handling is still managed internally).
+ * - Use `renderColorBox` to customize the color dots while keeping the default layout.
+ *
+ * @example
+ * ```tsx
+ * import { ThemePresetButtons } from "@fakhrirafiki/theme-engine";
+ *
+ * export function PresetsSection() {
+ *   return <ThemePresetButtons className="mt-6" maxPresets={24} />;
+ * }
+ * ```
+ */
 export const ThemePresetButtons = ({
   animation: animationOverrides = {},
   layout: layoutOverrides = {},
